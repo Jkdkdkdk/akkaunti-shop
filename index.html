@@ -1422,6 +1422,13 @@
             
             // Чат
             sendMessageBtn.addEventListener('click', sendMessage);
+            
+            // ИСПРАВЛЕНИЕ: Добавляем обработчик для кнопки Enter в чате
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
         }
         
         // Обновление UI авторизации
@@ -1873,6 +1880,16 @@
             
             orderTotal.textContent = `${total} ₽`;
             
+            // ИСПРАВЛЕНИЕ: Автоматически выбираем первый способ оплаты и показываем его реквизиты
+            paymentMethods.forEach(m => m.classList.remove('active'));
+            paymentDetails.forEach(d => d.classList.remove('active'));
+            
+            if (paymentMethods.length > 0) {
+                paymentMethods[0].classList.add('active');
+                const methodType = paymentMethods[0].dataset.method;
+                document.getElementById(`${methodType}-details`).classList.add('active');
+            }
+            
             // Переходим на страницу оплаты
             showPage('payment');
         }
@@ -1888,6 +1905,10 @@
             const orderId = orders.length + 1;
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
+            // ИСПРАВЛЕНИЕ: Создаем URL для скриншота
+            const screenshotFile = paymentScreenshot.files[0];
+            const screenshotUrl = URL.createObjectURL(screenshotFile);
+            
             const order = {
                 id: orderId,
                 userId: currentUser.id,
@@ -1897,7 +1918,7 @@
                 total: total,
                 date: new Date().toLocaleString('ru-RU'),
                 status: 'Ожидает подтверждения',
-                screenshot: URL.createObjectURL(paymentScreenshot.files[0]),
+                screenshot: screenshotUrl,
                 chatId: orderId
             };
             
