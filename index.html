@@ -1339,6 +1339,10 @@
             
             // Назначаем обработчики событий
             setupEventListeners();
+            
+            // ДЕБАГ: Добавляем сообщение в консоль для проверки
+            console.log('Приложение инициализировано');
+            console.log('Кнопка оформления заказа:', checkoutBtn);
         }
         
         // Назначение обработчиков событий
@@ -1398,7 +1402,11 @@
                 showPage('cart');
             });
             
-            checkoutBtn.addEventListener('click', checkout);
+            // ВАЖНОЕ ИСПРАВЛЕНИЕ: Добавляем обработчик для кнопки оформления заказа
+            checkoutBtn.addEventListener('click', function(e) {
+                console.log('Кнопка оформления заказа нажата!');
+                checkout();
+            });
             
             // Оплата
             paymentMethods.forEach(method => {
@@ -1860,6 +1868,8 @@
         
         // Оформление заказа
         function checkout() {
+            console.log('Функция checkout вызвана');
+            
             if (cart.length === 0) {
                 alert('Корзина пуста');
                 return;
@@ -1880,7 +1890,7 @@
             
             orderTotal.textContent = `${total} ₽`;
             
-            // ИСПРАВЛЕНИЕ: Автоматически выбираем первый способ оплаты и показываем его реквизиты
+            // Автоматически выбираем первый способ оплаты и показываем его реквизиты
             paymentMethods.forEach(m => m.classList.remove('active'));
             paymentDetails.forEach(d => d.classList.remove('active'));
             
@@ -1892,6 +1902,7 @@
             
             // Переходим на страницу оплаты
             showPage('payment');
+            console.log('Переход на страницу оплаты выполнен');
         }
         
         // Подтверждение оплаты
@@ -1905,7 +1916,7 @@
             const orderId = orders.length + 1;
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            // ИСПРАВЛЕНИЕ: Создаем URL для скриншота
+            // Создаем URL для скриншота
             const screenshotFile = paymentScreenshot.files[0];
             const screenshotUrl = URL.createObjectURL(screenshotFile);
             
