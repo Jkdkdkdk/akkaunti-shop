@@ -615,6 +615,17 @@
             color: white;
         }
         
+        .manager-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .manager-buttons .manager-button {
+            flex: 1;
+            margin: 0;
+        }
+        
         /* Страница оплаты */
         .payment-section {
             background: white;
@@ -804,6 +815,7 @@
             .cart-item { flex-direction: column; align-items: flex-start; gap: 10px; }
             .cart-item-actions { width: 100%; justify-content: space-between; }
             .payment-methods { grid-template-columns: 1fr; }
+            .manager-buttons { flex-direction: column; }
         }
     </style>
 </head>
@@ -858,7 +870,15 @@
                     Нет аккаунта? <a href="#" id="switch-to-register">Зарегистрироваться</a>
                 </div>
                 <div class="auth-switch">
-                    <p>Не хотите регистрироваться? <a href="https://t.me/KIRG_17" target="_blank">Купить аккаунт через главного менеджера</a></p>
+                    <p>Не хотите регистрироваться? Обратитесь к менеджерам:</p>
+                    <div class="manager-buttons">
+                        <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                            <i class="fab fa-telegram"></i> Главный менеджер
+                        </a>
+                        <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                            <i class="fab fa-telegram"></i> Менеджер
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -887,7 +907,15 @@
                     Уже есть аккаунт? <a href="#" id="switch-to-login">Войти</a>
                 </div>
                 <div class="auth-switch">
-                    <p>Не хотите регистрироваться? <a href="https://t.me/KIRG_17" target="_blank">Купить аккаунт через главного менеджера</a></p>
+                    <p>Не хотите регистрироваться? Обратитесь к менеджерам:</p>
+                    <div class="manager-buttons">
+                        <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                            <i class="fab fa-telegram"></i> Главный менеджер
+                        </a>
+                        <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                            <i class="fab fa-telegram"></i> Менеджер
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -909,9 +937,14 @@
                 </ul>
             </div>
             
-            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Не хотите регистрироваться? Купить аккаунт через главного менеджера
-            </a>
+            <div class="manager-buttons">
+                <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не хотите регистрироваться? Купить у главного менеджера
+                </a>
+                <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не хотите регистрироваться? Купить у менеджера
+                </a>
+            </div>
         </div>
 
         <!-- Страница товаров -->
@@ -932,9 +965,14 @@
                 <!-- Товары будут добавлены через JavaScript -->
             </div>
             
-            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Не хотите покупать через сайт? Обратитесь к главному менеджеру
-            </a>
+            <div class="manager-buttons">
+                <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не хотите покупать через сайт? Обратитесь к главному менеджеру
+                </a>
+                <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не хотите покупать через сайт? Обратитесь к менеджеру
+                </a>
+            </div>
         </div>
 
         <!-- Страница корзины -->
@@ -953,9 +991,14 @@
                 <button class="checkout-btn" id="checkout-btn"><i class="fas fa-credit-card"></i> Оформить заказ</button>
             </div>
             
-            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Не хотите оформлять заказ через сайт? Обратитесь к главному менеджера
-            </a>
+            <div class="manager-buttons">
+                <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не хотите оформлять заказ через сайт? Обратитесь к главному менеджеру
+                </a>
+                <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не хотите оформлять заказ через сайт? Обратитесь к менеджеру
+                </a>
+            </div>
         </div>
 
         <!-- Страница оплаты -->
@@ -1034,11 +1077,9 @@
             </div>
             
             <div class="payment-details" id="yoomoney-details">
-                <div class="yoomoney-payment">
-                    <h4>Оплата через Юмани</h4>
-                    <div class="payment-info">4100119001704075</div>
-                    <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
-                </div>
+                <h4>Оплата через Юмани</h4>
+                <div class="payment-info">4100119001704075</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
             </div>
             
             <div class="payment-details" id="crypto-details">
@@ -1058,9 +1099,14 @@
             
             <button class="btn" id="confirm-payment" style="width: 100%; margin-top: 20px;">Подтвердить оплату</button>
             
-            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Возникли проблемы с оплатой? Обратитесь к главному менеджеру
-            </a>
+            <div class="manager-buttons">
+                <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Возникли проблемы с оплатой? Обратитесь к главному менеджеру
+                </a>
+                <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Возникли проблемы с оплатой? Обратитесь к менеджеру
+                </a>
+            </div>
         </div>
 
         <!-- Чат с менеджером -->
@@ -1078,9 +1124,14 @@
                 <button id="send-message">Отправить</button>
             </div>
             
-            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Не отвечают в чате? Напишите главному менеджеру напрямую
-            </a>
+            <div class="manager-buttons">
+                <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не отвечают в чате? Напишите главному менеджеру напрямую
+                </a>
+                <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Не отвечают в чате? Напишите менеджеру напрямую
+                </a>
+            </div>
         </div>
 
         <!-- Страница моих заказов -->
@@ -1091,9 +1142,14 @@
                 <!-- История заказов будет добавлена через JavaScript -->
             </div>
             
-            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Есть вопросы по заказу? Обратитесь к главному менеджеру
-            </a>
+            <div class="manager-buttons">
+                <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Есть вопросы по заказу? Обратитесь к главному менеджеру
+                </a>
+                <a href="https://t.me/managerkirga17" target="_blank" class="manager-button">
+                    <i class="fab fa-telegram"></i> Есть вопросы по заказу? Обратитесь к менеджеру
+                </a>
+            </div>
         </div>
 
         <!-- Админ-панель -->
@@ -1154,7 +1210,7 @@
             localStorage.setItem('users', JSON.stringify(users));
         }
         
-        // Товары для продажи
+        // ПОЛНЫЙ ПРАЙС-ЛИСТ ТОВАРОВ
         const products = [
             // Случайные страны
             { id: 1, name: 'Случайная страна (Standard)', price: 99, description: 'Аккаунт Telegram со случайным номером, гарантия 3 дня', country: '🌍', type: 'STANDARD', category: 'random' },
@@ -1174,26 +1230,54 @@
             { id: 13, name: 'Россия (+7) Standard', price: 389, description: 'Аккаунт с российским номером, стандартная гарантия', country: '🇷🇺', type: 'STANDARD', category: 'specific' },
             { id: 14, name: 'Россия (+7) VIP', price: 499, description: 'Аккаунт с российским номером, VIP гарантия', country: '🇷🇺', type: 'VIP', category: 'specific' },
             { id: 15, name: 'Россия (+7) VIP+', price: 555, description: 'Аккаунт с российским номером, VIP+ гарантия', country: '🇷🇺', type: 'VIP+', category: 'specific' },
+            { id: 16, name: 'Великобритания (+44) Standard', price: 222, description: 'Аккаунт с британским номером, стандартная гарантия', country: '🇬🇧', type: 'STANDARD', category: 'specific' },
+            { id: 17, name: 'Великобритания (+44) VIP', price: 399, description: 'Аккаунт с британским номером, VIP гарантия', country: '🇬🇧', type: 'VIP', category: 'specific' },
+            { id: 18, name: 'Великобритания (+44) VIP+', price: 489, description: 'Аккаунт с британским номером, VIP+ гарантия', country: '🇬🇧', type: 'VIP+', category: 'specific' },
+            { id: 19, name: 'Украина (+380)', price: 319, description: 'Аккаунт с украинским номером', country: '🇺🇦', type: 'STANDARD', category: 'specific' },
+            { id: 20, name: 'Украина (+380) VIP', price: 589, description: 'Аккаунт с украинским номером, VIP гарантия', country: '🇺🇦', type: 'VIP', category: 'specific' },
+            { id: 21, name: 'Казахстан (+7)', price: 289, description: 'Аккаунт с казахстанским номером', country: '🇰🇿', type: 'STANDARD', category: 'specific' },
+            { id: 22, name: 'Узбекистан (+998)', price: 199, description: 'Аккаунт с узбекистанским номером', country: '🇺🇿', type: 'STANDARD', category: 'specific' },
+            { id: 23, name: 'ОАЭ (+971) Standard', price: 399, description: 'Аккаунт с номером ОАЭ, стандартная гарантия', country: '🇦🇪', type: 'STANDARD', category: 'specific' },
+            { id: 24, name: 'ОАЭ (+971) VIP', price: 449, description: 'Аккаунт с номером ОАЭ, VIP гарантия', country: '🇦🇪', type: 'VIP', category: 'specific' },
+            { id: 25, name: 'Испания (+34) Standard', price: 289, description: 'Аккаунт с испанским номером, стандартная гарантия', country: '🇪🇸', type: 'STANDARD', category: 'specific' },
+            { id: 26, name: 'Испания (+34) VIP', price: 319, description: 'Аккаунт с испанским номером, VIP гарантия', country: '🇪🇸', type: 'VIP', category: 'specific' },
             
             // Возрастные аккаунты
-            { id: 16, name: 'Аккаунт 2013-2014 гг.', price: 3890, description: 'Возрастной аккаунт с большой отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
-            { id: 17, name: 'Аккаунт 2015-2016 гг.', price: 2690, description: 'Возрастной аккаунт с большой отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
-            { id: 18, name: 'Аккаунт 2017 г.', price: 1690, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
-            { id: 19, name: 'Аккаунт 2018 г.', price: 799, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
-            { id: 20, name: 'Аккаунт 2019 г.', price: 689, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 27, name: 'Аккаунт 2013-2014 гг.', price: 3890, description: 'Возрастной аккаунт с большой отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 28, name: 'Аккаунт 2015-2016 гг.', price: 2690, description: 'Возрастной аккаунт с большой отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 29, name: 'Аккаунт 2017 г.', price: 1690, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 30, name: 'Аккаунт 2018 г.', price: 799, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 31, name: 'Аккаунт 2019 г.', price: 689, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 32, name: 'Аккаунт 2020 г.', price: 599, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 33, name: 'Аккаунт 2021 г.', price: 489, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 34, name: 'Аккаунт 2022 г.', price: 399, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            { id: 35, name: 'Аккаунт 2023 г.', price: 289, description: 'Возрастной аккаунт с отлёжкой', country: '📜', type: 'VINTAGE', category: 'vintage' },
+            
+            // Красивые номера
+            { id: 36, name: 'Индия (+91) VIP', price: 419, description: 'Аккаунт с индийским номером, отлёжка 3+ лет', country: '🇮🇳', type: 'VIP', category: 'beautiful' },
+            { id: 37, name: 'Малайзия (+60) VIP', price: 509, description: 'Аккаунт с малайзийским номером, отлёжка 3+ лет', country: '🇲🇾', type: 'VIP', category: 'beautiful' },
+            { id: 38, name: 'Россия (+7) VIP', price: 799, description: 'Аккаунт с российским номером, отлёжка 3+ лет', country: '🇷🇺', type: 'VIP', category: 'beautiful' },
             
             // Telegram Premium
-            { id: 21, name: 'США (+1) Telegram Premium', price: 488, description: 'Аккаунт с американским номером и Telegram Premium', country: '🇺🇸', type: 'PREMIUM', category: 'premium' },
-            { id: 22, name: 'Германия (+49) Telegram Premium', price: 470, description: 'Аккаунт с немецким номером и Telegram Premium', country: '🇩🇪', type: 'PREMIUM', category: 'premium' },
-            { id: 23, name: 'Канада (+1) Telegram Premium', price: 583, description: 'Аккаунт с канадским номером и Telegram Premium', country: '🇨🇦', type: 'PREMIUM', category: 'premium' },
+            { id: 39, name: 'США (+1) Telegram Premium', price: 488, description: 'Аккаунт с американским номером и Telegram Premium', country: '🇺🇸', type: 'PREMIUM', category: 'premium' },
+            { id: 40, name: 'Германия (+49) Telegram Premium', price: 470, description: 'Аккаунт с немецким номером и Telegram Premium', country: '🇩🇪', type: 'PREMIUM', category: 'premium' },
+            { id: 41, name: 'Канада (+1) Telegram Premium', price: 583, description: 'Аккаунт с канадским номером и Telegram Premium', country: '🇨🇦', type: 'PREMIUM', category: 'premium' },
             
             // ВКонтакте
-            { id: 24, name: 'Канада (+1) ВК Standard', price: 109, description: 'Стандартный аккаунт ВКонтакте с номером Канады', country: '🇨🇦', type: 'STANDARD', category: 'vk' },
-            { id: 25, name: 'Канада (+1) ВК VIP', price: 169, description: 'VIP аккаунт ВКонтакте с номером Канады', country: '🇨🇦', type: 'VIP', category: 'vk' },
-            { id: 26, name: 'США (+1) ВК Standard', price: 109, description: 'Стандартный аккаунт ВКонтакте с номером США', country: '🇺🇸', type: 'STANDARD', category: 'vk' },
-            { id: 27, name: 'США (+1) ВК VIP', price: 199, description: 'VIP аккаунт ВКонтакте с номером США', country: '🇺🇸', type: 'VIP', category: 'vk' },
-            { id: 28, name: 'Россия (+7) ВК Standard', price: 179, description: 'Стандартный аккаунт ВКонтакте с номером России', country: '🇷🇺', type: 'STANDARD', category: 'vk' },
-            { id: 29, name: 'Россия (+7) ВК VIP', price: 299, description: 'VIP аккаунт ВКонтакте с номером России', country: '🇷🇺', type: 'VIP', category: 'vk' }
+            { id: 42, name: 'Канада (+1) ВК Standard', price: 109, description: 'Стандартный аккаунт ВКонтакте с номером Канады', country: '🇨🇦', type: 'STANDARD', category: 'vk' },
+            { id: 43, name: 'Канада (+1) ВК VIP', price: 169, description: 'VIP аккаунт ВКонтакте с номером Канады', country: '🇨🇦', type: 'VIP', category: 'vk' },
+            { id: 44, name: 'США (+1) ВК Standard', price: 109, description: 'Стандартный аккаунт ВКонтакте с номером США', country: '🇺🇸', type: 'STANDARD', category: 'vk' },
+            { id: 45, name: 'США (+1) ВК VIP', price: 199, description: 'VIP аккаунт ВКонтакте с номером США', country: '🇺🇸', type: 'VIP', category: 'vk' },
+            { id: 46, name: 'США (+1) ВК VIP+', price: 299, description: 'VIP+ аккаунт ВКонтакте с номером США', country: '🇺🇸', type: 'VIP+', category: 'vk' },
+            { id: 47, name: 'Таиланд (+66) ВК VIP', price: 199, description: 'VIP аккаунт ВКонтакте с номером Таиланда', country: '🇹🇭', type: 'VIP', category: 'vk' },
+            { id: 48, name: 'Россия (+7) ВК Standard', price: 179, description: 'Стандартный аккаунт ВКонтакте с номером России', country: '🇷🇺', type: 'STANDARD', category: 'vk' },
+            { id: 49, name: 'Россия (+7) ВК VIP', price: 299, description: 'VIP аккаунт ВКонтакте с номером России', country: '🇷🇺', type: 'VIP', category: 'vk' },
+            { id: 50, name: 'Россия (+7) ВК VIP+', price: 699, description: 'VIP+ аккаунт ВКонтакте с номером России', country: '🇷🇺', type: 'VIP+', category: 'vk' },
+            { id: 51, name: 'СНГ страны ВК Standard', price: 299, description: 'Стандартный аккаунт ВКонтакте из стран СНГ', country: '🌍', type: 'STANDARD', category: 'vk' },
+            { id: 52, name: 'СНГ страны ВК VIP', price: 499, description: 'VIP аккаунт ВКонтакте из стран СНГ', country: '🌍', type: 'VIP', category: 'vk' },
+            { id: 53, name: 'СНГ страны ВК VIP+', price: 707, description: 'VIP+ аккаунт ВКонтакте из стран СНГ', country: '🌍', type: 'VIP+', category: 'vk' },
+            { id: 54, name: 'Возрастные аккаунты ВК', price: 169, description: 'Возрастные аккаунты ВКонтакте с историей', country: '📜', type: 'VINTAGE', category: 'vk' },
+            { id: 55, name: 'Аккаунты ВК Европа', price: 199, description: 'Аккаунты ВКонтакте с европейскими номерами', country: '🇪🇺', type: 'STANDARD', category: 'vk' }
         ];
         
         // DOM элементы
