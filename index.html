@@ -615,6 +615,178 @@
             color: white;
         }
         
+        /* Страница оплаты */
+        .payment-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .payment-method {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .payment-method:hover, .payment-method.active {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+        
+        .payment-details {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .payment-details.active {
+            display: block;
+        }
+        
+        .payment-info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .upload-section {
+            margin-top: 20px;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .upload-btn input {
+            display: none;
+        }
+        
+        /* Чат с менеджером */
+        .chat-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            background: #e3f2fd;
+            margin-left: auto;
+        }
+        
+        .message.admin {
+            background: #f0f0f0;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .chat-input button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Админ-панель */
+        .admin-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .users-table th, .users-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .users-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .users-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status.active {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: #4CAF50;
+        }
+        
         /* Адаптивность */
         @media (min-width: 768px) { 
             .btn { width: auto; } 
@@ -631,6 +803,7 @@
             .products-grid { grid-template-columns: 1fr; }
             .cart-item { flex-direction: column; align-items: flex-start; gap: 10px; }
             .cart-item-actions { width: 100%; justify-content: space-between; }
+            .payment-methods { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -653,7 +826,7 @@
                 Корзина <span class="cart-badge" id="cart-badge">0</span>
             </a>
             <a href="#" class="nav-link" data-page="orders">Мои заказы</a>
-            <a href="#" class="nav-link" data-page="admin">Админ-панель</a>
+            <a href="#" class="nav-link admin-link" data-page="admin" style="display: none;">Админ-панель</a>
         </div>
 
         <!-- Секция авторизации -->
@@ -781,7 +954,132 @@
             </div>
             
             <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
-                <i class="fab fa-telegram"></i> Не хотите оформлять заказ через сайт? Обратитесь к главному менеджеру
+                <i class="fab fa-telegram"></i> Не хотите оформлять заказ через сайт? Обратитесь к главному менеджера
+            </a>
+        </div>
+
+        <!-- Страница оплаты -->
+        <div class="payment-section" id="payment-page" style="display: none;">
+            <h2 class="section-title">Оплата заказа</h2>
+            
+            <div class="order-summary">
+                <h3>Ваш заказ:</h3>
+                <div id="order-items"></div>
+                <div class="cart-total">
+                    <span>Итого к оплате:</span>
+                    <span id="order-total">0 ₽</span>
+                </div>
+            </div>
+            
+            <h3>Выберите способ оплаты:</h3>
+            <div class="payment-methods">
+                <div class="payment-method" data-method="sbp">
+                    <i class="fas fa-mobile-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>СБП</h4>
+                </div>
+                <div class="payment-method" data-method="sber">
+                    <i class="fas fa-university" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Сбербанк</h4>
+                </div>
+                <div class="payment-method" data-method="alpha">
+                    <i class="fas fa-credit-card" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Альфа-Банк</h4>
+                </div>
+                <div class="payment-method" data-method="tinkoff">
+                    <i class="fas fa-credit-card" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Тинькофф</h4>
+                </div>
+                <div class="payment-method" data-method="pochta">
+                    <i class="fas fa-credit-card" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Почта Банк</h4>
+                </div>
+                <div class="payment-method" data-method="yoomoney">
+                    <i class="fas fa-wallet" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Юмани</h4>
+                </div>
+                <div class="payment-method" data-method="crypto">
+                    <i class="fab fa-bitcoin" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h4>Криптовалюта</h4>
+                </div>
+            </div>
+            
+            <div class="payment-details" id="sbp-details">
+                <h4>Реквизиты для оплаты:</h4>
+                <div class="payment-info">89218748626</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+            </div>
+            
+            <div class="payment-details" id="sber-details">
+                <h4>Реквизиты для оплаты:</h4>
+                <div class="payment-info">2202208283494368</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+            </div>
+            
+            <div class="payment-details" id="alpha-details">
+                <h4>Реквизиты для оплаты:</h4>
+                <div class="payment-info">2200152917964960</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+            </div>
+            
+            <div class="payment-details" id="tinkoff-details">
+                <h4>Реквизиты для оплаты:</h4>
+                <div class="payment-info">2200700808267560</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+            </div>
+            
+            <div class="payment-details" id="pochta-details">
+                <h4>Реквизиты для оплаты:</h4>
+                <div class="payment-info">2200770631165505</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+            </div>
+            
+            <div class="payment-details" id="yoomoney-details">
+                <div class="yoomoney-payment">
+                    <h4>Оплата через Юмани</h4>
+                    <div class="payment-info">4100119001704075</div>
+                    <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+                </div>
+            </div>
+            
+            <div class="payment-details" id="crypto-details">
+                <h4>Реквизиты для оплаты:</h4>
+                <div class="payment-info">USDT/TON (сеть TON): UQA_qFBvYKRAwn65kvRPxn2oqGBJffSQgQTetGicaxe6Rw2C</div>
+                <p>После оплаты пришлите скриншот чека в чат с менеджером</p>
+            </div>
+            
+            <div class="upload-section">
+                <h4>Загрузите скриншот оплаты:</h4>
+                <label class="upload-btn">
+                    <i class="fas fa-upload"></i> Выбрать файл
+                    <input type="file" id="payment-screenshot" accept="image/*">
+                </label>
+                <div id="file-name" style="margin-top: 10px;"></div>
+            </div>
+            
+            <button class="btn" id="confirm-payment" style="width: 100%; margin-top: 20px;">Подтвердить оплату</button>
+            
+            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                <i class="fab fa-telegram"></i> Возникли проблемы с оплатой? Обратитесь к главному менеджеру
+            </a>
+        </div>
+
+        <!-- Чат с менеджером -->
+        <div class="chat-section" id="chat-page" style="display: none;">
+            <h2 class="section-title">Чат с менеджером</h2>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message admin">
+                    <strong>Менеджер:</strong> Здравствуйте! Ожидаю ваш скриншот оплаты для подтверждения заказа.
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="Введите сообщение...">
+                <button id="send-message">Отправить</button>
+            </div>
+            
+            <a href="https://t.me/KIRG_17" target="_blank" class="manager-button">
+                <i class="fab fa-telegram"></i> Не отвечают в чате? Напишите главному менеджеру напрямую
             </a>
         </div>
 
@@ -799,13 +1097,33 @@
         </div>
 
         <!-- Админ-панель -->
-        <div class="main-content" id="admin-page" style="display: none;">
+        <div class="admin-section" id="admin-page" style="display: none;">
             <h2 class="section-title">Админ-панель</h2>
             
-            <div class="empty-state">
-                <i class="fas fa-lock"></i>
-                <h3>Доступ ограничен</h3>
-                <p>Эта страница доступна только администраторам</p>
+            <h3>Зарегистрированные пользователи:</h3>
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th>Дата регистрации</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <!-- Пользователи будут добавлены через JavaScript -->
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 30px;">Активные заказы:</h3>
+            <div id="admin-orders">
+                <!-- Заказы будут добавлены через JavaScript -->
+            </div>
+            
+            <h3 style="margin-top: 30px;">История чатов:</h3>
+            <div id="admin-chats">
+                <!-- Чаты будут добавлены через JavaScript -->
             </div>
         </div>
     </div>
@@ -820,6 +1138,7 @@
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let chats = JSON.parse(localStorage.getItem('chats')) || {};
         
         // Создаем администратора по умолчанию
         if (users.length === 0) {
@@ -895,15 +1214,30 @@
         const cartItems = document.getElementById('cart-items');
         const cartTotal = document.getElementById('cart-total');
         const checkoutBtn = document.getElementById('checkout-btn');
+        const orderItems = document.getElementById('order-items');
+        const orderTotal = document.getElementById('order-total');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentDetails = document.querySelectorAll('.payment-details');
+        const confirmPaymentBtn = document.getElementById('confirm-payment');
+        const paymentScreenshot = document.getElementById('payment-screenshot');
+        const fileName = document.getElementById('file-name');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendMessageBtn = document.getElementById('send-message');
+        const usersTableBody = document.getElementById('users-table-body');
+        const adminOrders = document.getElementById('admin-orders');
         const ordersHistory = document.getElementById('orders-history');
         const categoryTabs = document.querySelectorAll('.category-tab');
         const cartBadge = document.getElementById('cart-badge');
+        const adminLink = document.querySelector('.admin-link');
         
         // Страницы
         const homePage = document.getElementById('home-page');
         const productsPage = document.getElementById('products-page');
         const cartPage = document.getElementById('cart-page');
         const ordersPage = document.getElementById('orders-page');
+        const paymentPage = document.getElementById('payment-page');
+        const chatPage = document.getElementById('chat-page');
         const adminPage = document.getElementById('admin-page');
         
         // Навигационные ссылки
@@ -914,6 +1248,8 @@
             updateAuthUI();
             loadProducts('random');
             updateCartUI();
+            loadUsersTable();
+            loadAdminOrders();
             loadOrdersHistory();
             updateCartBadge();
             
@@ -979,6 +1315,29 @@
             });
             
             checkoutBtn.addEventListener('click', checkout);
+            
+            // Оплата
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', () => {
+                    paymentMethods.forEach(m => m.classList.remove('active'));
+                    paymentDetails.forEach(d => d.classList.remove('active'));
+                    method.classList.add('active');
+                    const methodType = method.dataset.method;
+                    document.getElementById(`${methodType}-details`).classList.add('active');
+                });
+            });
+            
+            paymentScreenshot.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    fileName.textContent = `Выбран файл: ${file.name}`;
+                }
+            });
+            
+            confirmPaymentBtn.addEventListener('click', confirmPayment);
+            
+            // Чат
+            sendMessageBtn.addEventListener('click', sendMessage);
         }
         
         // Обновление UI авторизации
@@ -989,9 +1348,17 @@
                 userName.textContent = currentUser.name;
                 loginForm.classList.remove('active');
                 registerForm.classList.remove('active');
+                
+                // Показываем ссылку на админ-панель только для администраторов
+                if (currentUser.isAdmin) {
+                    adminLink.style.display = 'block';
+                } else {
+                    adminLink.style.display = 'none';
+                }
             } else {
                 authButtons.style.display = 'flex';
                 userMenu.style.display = 'none';
+                adminLink.style.display = 'none';
             }
         }
         
@@ -1122,6 +1489,60 @@
             updateCartBadge();
         }
         
+        // Загрузка таблицы пользователей для админа
+        function loadUsersTable() {
+            usersTableBody.innerHTML = '';
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.registrationDate}</td>
+                    <td><span class="status active">Активен</span></td>
+                `;
+                usersTableBody.appendChild(row);
+            });
+        }
+        
+        // Загрузка заказов для админа
+        function loadAdminOrders() {
+            adminOrders.innerHTML = '';
+            
+            if (orders.length === 0) {
+                adminOrders.innerHTML = '<p>Нет активных заказов</p>';
+                return;
+            }
+            
+            orders.forEach(order => {
+                const orderElement = document.createElement('div');
+                orderElement.className = 'order-item';
+                orderElement.style.padding = '15px';
+                orderElement.style.border = '1px solid #ddd';
+                orderElement.style.borderRadius = '8px';
+                orderElement.style.marginBottom = '10px';
+                
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    itemsHtml += `<div>${item.name} - ${item.quantity} шт. x ${item.price} ₽</div>`;
+                });
+                
+                orderElement.innerHTML = `
+                    <h4>Заказ #${order.id} от ${order.date}</h4>
+                    <div>Пользователь: ${order.userName} (${order.userEmail})</div>
+                    <div>Товары: ${itemsHtml}</div>
+                    <div>Общая сумма: ${order.total} ₽</div>
+                    <div>Статус: ${order.status}</div>
+                    ${order.screenshot ? `<div>Скриншот оплаты: <a href="${order.screenshot}" target="_blank">Просмотр</a></div>` : ''}
+                    <button class="btn" style="margin-top: 10px;" onclick="confirmOrder(${order.id})">Подтвердить заказ</button>
+                    <button class="btn" style="margin-top: 10px; background: #667eea;" onclick="openAdminChat(${order.id})">Открыть чат</button>
+                `;
+                
+                adminOrders.appendChild(orderElement);
+            });
+        }
+        
         // Загрузка истории заказов для пользователя
         function loadOrdersHistory() {
             ordersHistory.innerHTML = '';
@@ -1165,6 +1586,7 @@
                         ${itemsHtml}
                     </div>
                     <div class="order-total">Итого: ${order.total} ₽</div>
+                    ${order.chatId ? `<button class="btn" style="margin-top: 10px;" onclick="openChat(${order.chatId})">Открыть чат</button>` : ''}
                 `;
                 
                 ordersHistory.appendChild(orderElement);
@@ -1299,6 +1721,8 @@
             productsPage.style.display = 'none';
             cartPage.style.display = 'none';
             ordersPage.style.display = 'none';
+            paymentPage.style.display = 'none';
+            chatPage.style.display = 'none';
             adminPage.style.display = 'none';
             
             // Показываем выбранную страницу
@@ -1350,6 +1774,32 @@
                 return;
             }
             
+            // Обновляем информацию о заказе
+            orderItems.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const orderItem = document.createElement('div');
+                orderItem.innerHTML = `${item.name} - ${item.quantity} шт. x ${item.price} ₽ = ${itemTotal} ₽`;
+                orderItems.appendChild(orderItem);
+            });
+            
+            orderTotal.textContent = `${total} ₽`;
+            
+            // Переходим на страницу оплаты
+            showPage('payment');
+        }
+        
+        // Подтверждение оплаты
+        function confirmPayment() {
+            if (!paymentScreenshot.files[0]) {
+                alert('Пожалуйста, загрузите скриншот оплаты');
+                return;
+            }
+            
             // Создаем заказ
             const orderId = orders.length + 1;
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -1362,20 +1812,141 @@
                 items: [...cart],
                 total: total,
                 date: new Date().toLocaleString('ru-RU'),
-                status: 'Ожидает подтверждения'
+                status: 'Ожидает подтверждения',
+                screenshot: URL.createObjectURL(paymentScreenshot.files[0]),
+                chatId: orderId
             };
             
             orders.push(order);
             localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Создаем чат для этого заказа
+            if (!chats[orderId]) {
+                chats[orderId] = [
+                    {
+                        sender: 'admin',
+                        text: 'Здравствуйте! Ожидаю ваш скриншот оплаты для подтверждения заказа.',
+                        time: new Date().toLocaleString('ru-RU')
+                    }
+                ];
+                localStorage.setItem('chats', JSON.stringify(chats));
+            }
             
             // Очищаем корзину
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartUI();
             
-            alert('Заказ оформлен! Ожидайте подтверждения в личном кабинете.');
-            showPage('orders');
+            // Переходим в чат
+            showPage('chat');
+            
+            // Загружаем сообщения чата
+            loadChatMessages(orderId);
+            
+            alert('Заказ оформлен! Ожидайте подтверждения оплаты в чате с менеджером.');
         }
+        
+        // Загрузка сообщений чата
+        function loadChatMessages(orderId) {
+            chatMessages.innerHTML = '';
+            
+            if (chats[orderId]) {
+                chats[orderId].forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.className = `message ${message.sender}`;
+                    messageElement.innerHTML = `
+                        <strong>${message.sender === 'admin' ? 'Менеджер' : currentUser.name}:</strong> ${message.text}
+                        <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">${message.time}</div>
+                    `;
+                    chatMessages.appendChild(messageElement);
+                });
+            }
+            
+            // Прокручиваем вниз
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Отправка сообщения
+        function sendMessage() {
+            const messageText = chatInput.value.trim();
+            if (!messageText) return;
+            
+            // Находим активный заказ (последний заказ пользователя)
+            const userOrders = orders.filter(order => order.userId === currentUser.id);
+            if (userOrders.length === 0) return;
+            
+            const lastOrder = userOrders[userOrders.length - 1];
+            const orderId = lastOrder.id;
+            
+            // Добавляем сообщение в чат
+            if (!chats[orderId]) {
+                chats[orderId] = [];
+            }
+            
+            const newMessage = {
+                sender: 'user',
+                text: messageText,
+                time: new Date().toLocaleString('ru-RU')
+            };
+            
+            chats[orderId].push(newMessage);
+            localStorage.setItem('chats', JSON.stringify(chats));
+            
+            // Очищаем поле ввода
+            chatInput.value = '';
+            
+            // Обновляем чат
+            loadChatMessages(orderId);
+        }
+        
+        // Функции для админа
+        window.confirmOrder = function(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'Подтвержден';
+                localStorage.setItem('orders', JSON.stringify(orders));
+                loadAdminOrders();
+                alert('Заказ подтвержден!');
+            }
+        };
+        
+        // Функция для открытия чата из истории заказов
+        window.openChat = function(orderId) {
+            showPage('chat');
+            loadChatMessages(orderId);
+        };
+        
+        // Функция для открытия чата из админ-панели
+        window.openAdminChat = function(orderId) {
+            showPage('chat');
+            loadChatMessages(orderId);
+            
+            // Добавляем возможность отправлять сообщения от имени администратора
+            sendMessageBtn.onclick = function() {
+                const messageText = chatInput.value.trim();
+                if (!messageText) return;
+                
+                // Добавляем сообщение в чат
+                if (!chats[orderId]) {
+                    chats[orderId] = [];
+                }
+                
+                const newMessage = {
+                    sender: 'admin',
+                    text: messageText,
+                    time: new Date().toLocaleString('ru-RU')
+                };
+                
+                chats[orderId].push(newMessage);
+                localStorage.setItem('chats', JSON.stringify(chats));
+                
+                // Очищаем поле ввода
+                chatInput.value = '';
+                
+                // Обновляем чат
+                loadChatMessages(orderId);
+            };
+        };
         
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', initApp);
