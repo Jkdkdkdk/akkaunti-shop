@@ -902,6 +902,20 @@
         <div class="main-content" id="home-page">
             <h2 class="section-title">Оформить заказ аккаунтов Telegram</h2>
             <p style="text-align: center; margin-bottom: 20px;">Зарегистрируйтесь или войдите в аккаунт, чтобы начать покупки</p>
+            
+            <!-- Добавленная секция для заказа без регистрации -->
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: #667eea; text-align: center; margin-bottom: 15px;">Не хотите регистрироваться?</h3>
+                <p style="text-align: center; margin-bottom: 15px;">Вы можете оформить заказ напрямую через менеджера в Telegram:</p>
+                <div class="manager-buttons">
+                    <a href="https://t.me/KIRG_17" class="manager-button" target="_blank">
+                        <i class="fab fa-telegram"></i> Главный менеджер
+                    </a>
+                    <a href="https://t.me/manager_k17" class="manager-button" target="_blank">
+                        <i class="fab fa-telegram"></i> Дополнительный менеджер
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Страница товаров -->
@@ -1157,7 +1171,7 @@
                 });
             });
 
-            // ОПЛАТА - ВАЖНО: type="button" для кнопки оформления заказа
+            // ОПЛАТА - ИСПРАВЛЕНО: добавлен правильный обработчик для checkout-btn
             document.getElementById('checkout-btn').addEventListener('click', checkout);
             document.getElementById('confirm-payment').addEventListener('click', confirmPayment);
             
@@ -1267,26 +1281,50 @@
             });
             
             switch(page) {
-                case 'home': document.getElementById('home-page').style.display = 'block'; break;
+                case 'home': 
+                    document.getElementById('home-page').style.display = 'block'; 
+                    break;
                 case 'products': 
-                    if (!currentUser) { alert('Войдите в аккаунт!'); return; }
+                    if (!currentUser) { 
+                        alert('Войдите в аккаунт!'); 
+                        showAuthForm('login');
+                        return; 
+                    }
                     document.getElementById('products-page').style.display = 'block'; 
                     break;
                 case 'cart': 
-                    if (!currentUser) { alert('Войдите в аккаунт!'); return; }
+                    if (!currentUser) { 
+                        alert('Войдите в аккаунт!'); 
+                        showAuthForm('login');
+                        return; 
+                    }
                     document.getElementById('cart-page').style.display = 'block'; 
                     break;
                 case 'orders': 
-                    if (!currentUser) { alert('Войдите в аккаунт!'); return; }
+                    if (!currentUser) { 
+                        alert('Войдите в аккаунт!'); 
+                        showAuthForm('login');
+                        return; 
+                    }
                     document.getElementById('orders-page').style.display = 'block'; 
                     loadOrdersHistory();
                     break;
                 case 'admin': 
-                    if (!currentUser || !currentUser.isAdmin) { alert('Нет доступа!'); return; }
+                    if (!currentUser || !currentUser.isAdmin) { 
+                        alert('Нет доступа!'); 
+                        return; 
+                    }
                     document.getElementById('admin-page').style.display = 'block'; 
                     loadAdminData();
                     break;
-                default: document.getElementById('home-page').style.display = 'block';
+                case 'payment':
+                    document.getElementById('payment-page').style.display = 'block';
+                    break;
+                case 'chat':
+                    document.getElementById('chat-page').style.display = 'block';
+                    break;
+                default: 
+                    document.getElementById('home-page').style.display = 'block';
             }
         }
 
@@ -1312,7 +1350,11 @@
             
             container.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    if (!currentUser) { alert('Войдите в аккаунт!'); return; }
+                    if (!currentUser) { 
+                        alert('Войдите в аккаунт!'); 
+                        showAuthForm('login');
+                        return; 
+                    }
                     const product = products.find(p => p.id == e.target.dataset.id);
                     addToCart(product);
                     alert(`"${product.name}" добавлен в корзину!`);
@@ -1391,10 +1433,16 @@
             });
         }
 
-        // ОФОРМЛЕНИЕ ЗАКАЗА - ТЕПЕРЬ РАБОТАЕТ!
+        // ОФОРМЛЕНИЕ ЗАКАЗА - ИСПРАВЛЕНО
         function checkout() {
             if (cart.length === 0) {
                 alert('Корзина пуста!');
+                return;
+            }
+            
+            if (!currentUser) {
+                alert('Войдите в аккаунт для оформления заказа!');
+                showAuthForm('login');
                 return;
             }
             
@@ -1411,6 +1459,7 @@
             document.querySelector('.payment-method').classList.add('active');
             document.querySelector('.payment-details').classList.add('active');
             
+            // Показываем страницу оплаты
             showPage('payment');
         }
 
